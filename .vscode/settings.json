@@ -2,5 +2,7 @@
     "python.linting.pylintEnabled": true,
     "python.linting.pep8Enabled": false,
     "python.linting.enabled": true,
-    "python.pythonPath": "/bin/python"
+    "python.pythonPath": "/bin/python",
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": false
 }
