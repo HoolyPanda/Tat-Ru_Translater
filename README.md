@@ -1,6 +1,6 @@
 # Tat-Ru_Translater
-INSTALL
-chmod 777 depInstaller
-./depInstaller
-
+INSTALL\n
+chmod 777 depInstaller\n
+./depInstaller\n
+\n
 Ready to use
