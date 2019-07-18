@@ -1,10 +1,10 @@
-from pandas import ExcelFile
-from pandas import ExcelWriter
+# from pandas import ExcelFile
+# # from pandas import ExcelWriter
 import pandas
 from pymystem3 import Mystem as stem
-import json
-from xlrd import open_workbook
-import xlrd 
+# import json
+# # from xlrd import open_workbook
+# import xlrd 
 import openpyxl
 
 
@@ -79,6 +79,7 @@ class Server:
                     out = out[0:(len(out) - 1)]
                     out += sword.get("text") 
                 elif (sword.get("text") == "\n"):
+                    out = out[:-1]
                     out += "\n"
                 pass
             if (len(self.addTranslations) != 0):
@@ -88,12 +89,13 @@ class Server:
                     wordType = input("      Введите тип слова: ") 
                     wortdTranslate = input("      Введите перевод слова: ") 
                     wb = openpyxl.load_workbook(filename = "./tato-wordlist.xlsx")
-                    sheet = wb.get_sheet_by_name("Тато - Русский")
+                    sheet = wb.get_sheet_by_name(wb.get_sheet_names()[1])
                     rows = sheet.max_row + 1
                     sheet.cell(rows, 1).value = wortdTranslate
                     sheet.cell(rows, 2).value = wordType
                     sheet.cell(rows, 3).value = aWord
-                    sheet = wb.get_sheet_by_name("Русский - Тато")
+                    sheet = wb.get_sheet_by_name(wb.get_sheet_names()[0])
+                    rows = sheet.max_row + 1
                     sheet.cell(rows, 1).value = aWord
                     sheet.cell(rows, 2).value = wordType
                     sheet.cell(rows, 3).value = wortdTranslate
@@ -110,7 +112,12 @@ class Server:
         for wordIndex in self.wl.index:
                 if (self.wl["Слово"][wordIndex] == word):
                     return (self.wl['Перевод'][wordIndex]) 
-        self.addTranslations.append(word)
+        unicWord = True
+        for subWord in self.addTranslations:
+            if subWord == word:
+                unicWord = False
+        if unicWord:
+            self.addTranslations.append(word)
         return False
 
 
@@ -133,7 +140,7 @@ class Server:
             else:
                 lemm = s.lemmatize(word)
                 out = self.__translate__(lemm)
-                if ( out is None ):
+                if ( out is not False ):
                     self.__TransalteComplexWord__(word)
                 else:
                     print( word + " => " + out)

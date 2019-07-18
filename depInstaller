@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+sudo pip install pandas
+sudo pip install pymystem3
+sudo pip install openpyxl
