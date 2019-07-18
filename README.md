@@ -3,4 +3,5 @@
 chmod 777 depInstaller  
 ./depInstaller  
   
-#### Ready to use
+#### USAGE
+from folder run ./main.py
