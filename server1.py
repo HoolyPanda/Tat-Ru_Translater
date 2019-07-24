@@ -30,13 +30,10 @@ class Server:
             return None
     
     def checkDictionaries(self, word, wordType = None):
-        isWord = True
         for dictionary in linguoData.dicts:
             if word in dictionary:
                 self.passWord = True
-                isWord = False
                 return dictionary[word]
-                pass
             else:
                 pass
         if word in linguoData.mestPrefx:
@@ -49,40 +46,39 @@ class Server:
                 langPart = self.__convertLangPart(lp = wordType)
                 if langPart is not None:
                     if self.dict.cell(wordIndex, 2).value != langPart:
+                        self.passWord = False
                         return (linguoData.chastrechiPrist[langPart] + self.dict.cell(wordIndex,3))
                     else:
+                        self.passWord = False
                         return (self.dict.cell(wordIndex, 3).value)
                 else:
                     print("Error! " + wordType)
                 pass
+        print("No перевода для слова " + word + '\n' + "Добавить? (д/н)")
+        a = input("Введите команду: ")
+        if  a == "д":
+            translation = input("      Введите перевода для слова " + word + ": ")
+            wType = input("      Введите тип слова: ")
+            self.dict.cell(rows + 1, 1).value = word
+            self.dict.cell(rows + 1, 2).value = wType
+            self.dict.cell(rows + 1, 3).value = translation
+            self.dict = self.book.get_sheet_by_name(self.book.get_sheet_names()[1])
+            self.dict.cell(rows + 1, 1).value = word
+            self.dict.cell(rows + 1, 2).value = wType
+            self.dict.cell(rows + 1, 3).value = translation
+            self.book.save(filename = "./tato-wordlist.xlsx")
+            self.book.close()
+            self.passWord = False 
+            return translation
         else:
-            print("No перевода для слова " + word + '\n' + "Добавить? (д/н)")
-            a = input("Введите команду: ")
-            if  a == "д":
-                translation = input("      Введите перевода для слова " + word + ": ")
-                wType = input("      Введите тип слова: ")
-                self.dict.cell(rows + 1, 1).value = word
-                self.dict.cell(rows + 1, 2).value = wType
-                self.dict.cell(rows + 1, 3).value = translation
-                self.dict = self.book.get_sheet_by_name(self.book.get_sheet_names()[1])
-                self.dict.cell(rows + 1, 1).value = word
-                self.dict.cell(rows + 1, 2).value = wType
-                self.dict.cell(rows + 1, 3).value = translation
-                self.book.save(filename = "./tato-wordlist.xlsx")
-                self.book.close()
-                return translation
-            else:
-                return (word + "(NO TRANSLATION)")
-
-            # return " "
-            # print(self.dict.cell(wordIndex, 1).value)
-        
+            self.passWord = False
+            return (word + "(NO TRANSLATION)")
 
     def Translate(self, text, lang = "Ru"):
         self.transaltedOutput = ""
         self.passWord = False
         if self.lang == "Ru":
-            a = stem().analyze(text)
+            # a = stem().analyze(text)
             for buffWord in stem().analyze(text):
                 if "analysis" in buffWord:
                     buff = buffWord['analysis'][0]
