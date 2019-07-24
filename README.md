@@ -1,8 +1,9 @@
-# Tat-Ru_Translater
+# Tat-Ru_Translater  
+
 #### INSTALL  
 chmod 777 depInstaller  
 ./depInstaller  
   
-#### USAGE
+#### USAGE  
 from folder run  
 python3 main.py

@@ -1,9 +1,9 @@
 # from pandas import ExcelFile
-# # from pandas import ExcelWriter
+# from pandas import ExcelWriter
 import pandas
 from pymystem3 import Mystem as stem
 # import json
-# # from xlrd import open_workbook
+# from xlrd import open_workbook
 # import xlrd 
 import openpyxl
 
@@ -64,14 +64,36 @@ class Server:
     def __checkIfComplexWord(self, word:str):
         pass
 
+    def __convertLangPart(self, lp):
+        if "ADV" in lp:
+            return "нар"
+        elif "SPO" in lp:
+            return "мест"
+        elif "NUM" in lp:
+            return "чис"
+        elif "APRO" in lp:
+            return "пм"
+        elif "PR" in lp:
+            return "пред"
+        elif "V" in lp:
+            return "гл"
+        elif "S" in lp:
+            return "сущ"
+        elif "A" in lp:
+            return "прил"
+        else:
+            return "-"
+
     def __TranslateSentance__ (self,sent:str):
         
         out = ""
         if (self.lang == "Ru"):
             word = ""
+            a = stem().analyze(sent)
             for sword in stem().analyze(sent):
                 if ((sword.get("text") != ".") & (sword.get("text") != " ") & (sword.get("text") != "\n")):
-                    word = sword.get("analysis")[0].get('lex')
+                    word = sword.get("analysis")[0]
+                    langPart = sword.get("analysis")[0].get("gr")[0]
                     o = self.__translate__(word)
                     if (o):
                         out += (o + "-")
@@ -101,7 +123,6 @@ class Server:
                     sheet.cell(rows, 3).value = wortdTranslate
                     wb.save(filename = "./tato-wordlist.xlsx")
                     wb.close()
-                    
             else:
                 print ( sent + "\n" + out)
                 pass
@@ -110,15 +131,21 @@ class Server:
 
     def __translate__(self, word):
         for wordIndex in self.wl.index:
-                if (self.wl["Слово"][wordIndex] == word):
-                    return (self.wl['Перевод'][wordIndex]) 
+                a = self.wl["Слово"][wordIndex]
+                if (self.wl["Слово"][wordIndex] == word.get('lex')):
+                    lp = self.__convertLangPart(lp=word.get("gr"))
+                    if self.wl["Часть речи"][wordIndex] == lp:
+                        return (self.wl['Перевод'][wordIndex]) 
+                    elif lp == "нар":
+                        
+                        pass
         unicWord = True
         for subWord in self.addTranslations:
             if subWord == word:
                 unicWord = False
         if unicWord:
             self.addTranslations.append(word)
-        return False
+        return None
 
 
     def Translate(self, lang:str ,word:str):
@@ -130,7 +157,7 @@ class Server:
                 if ('.' in word):
                     self.__TranslateSentance__(sent=word)
                 else:
-                    self.__TransalteComplexWord__(word=word)    
+                    self.__TransalteComplexWord__(word=word[0])
                     pass
         elif (lang == 'Ru'):
             self.wl = pandas.read_excel("./tato-wordlist.xlsx" , sheet_name='Русский - Тато')
@@ -139,9 +166,8 @@ class Server:
                 self.__TranslateSentance__(word)
             else:
                 lemm = s.lemmatize(word)
-                out = self.__translate__(lemm)
-                if ( out is not False ):
+                out = self.__translate__(word=lemm[0])
+                if ( (out is None) & ( True) ):
                     self.__TransalteComplexWord__(word)
                 else:
                     print( word + " => " + out)
-                    
