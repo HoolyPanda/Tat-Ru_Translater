@@ -56,9 +56,9 @@ class Server:
                     print("Error! " + wordType)
                 pass
         else:
-            print("No перевода для слова " + word + '\n' + "Добавить? \(y/n\)")
+            print("No перевода для слова " + word + '\n' + "Добавить? (д/н)")
             a = input("Введите команду: ")
-            if  a == "y":
+            if  a == "д":
                 translation = input("      Введите перевода для слова " + word + ": ")
                 wType = input("      Введите тип слова: ")
                 self.dict.cell(rows + 1, 1).value = word
@@ -68,6 +68,8 @@ class Server:
                 self.dict.cell(rows + 1, 1).value = word
                 self.dict.cell(rows + 1, 2).value = wType
                 self.dict.cell(rows + 1, 3).value = translation
+                self.book.save(filename = "./tato-wordlist.xlsx")
+                self.book.close()
                 return translation
             else:
                 return (word + "(NO TRANSLATION)")
