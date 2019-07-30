@@ -2,5 +2,14 @@
 import server1 as server
 
 s = server.Server()
-procText = input("Введите текст на Русском: ")
-s.Translate(lang='Ru', text=procText)
+
+def MainMenu():
+    procText = input("Введите текст на Русском: ")
+    s.Translate(lang='Ru', text=procText)
+    command = input("Продолжить?(д/н): ")
+    if command == "д":
+        MainMenu()
+    else:
+        exit()
+
+MainMenu()
