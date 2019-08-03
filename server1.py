@@ -29,7 +29,7 @@ class Server:
         else:
             return None
     
-    def checkDictionaries(self, word, wordType = None):
+    def checkDictionaries(self, word :str, wordType = None):
         for dictionary in linguoData.dicts:
             if word in dictionary:
                 self.passWord = True
@@ -78,13 +78,24 @@ class Server:
         self.transaltedOutput = ""
         self.passWord = False
         if self.lang == "Ru":
-            # a = stem().analyze(text)
             for buffWord in stem().analyze(text):
                 if "analysis" in buffWord:
                     buff = buffWord['analysis'][0]
+                    firstLetter = buffWord["text"][0]
+                    firstCapital = False
+                    if firstLetter.isupper():
+                        firstCapital = True 
                     gr = buff["gr"]
                     lex = buff["lex"]
-                    self.transaltedOutput += self.checkDictionaries(word = lex, wordType = gr)
+                    translatedBuffer = self.checkDictionaries(word = lex, wordType = gr)
+                    if firstCapital:
+                        translatedFirstCapital = translatedBuffer[0].upper()
+                        buffer = translatedFirstCapital
+                        buffer += translatedBuffer[1:]
+                        translatedBuffer = buffer
+                        firstCapital = False
+                    self.transaltedOutput += translatedBuffer
+
                 else:
                     if not self.passWord:
                         self.transaltedOutput += buffWord["text"]
