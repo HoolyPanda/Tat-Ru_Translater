@@ -5,7 +5,9 @@ import client
 s = translater.Translater()
 
 def MainMenu():
+    # client.Client().PushDict()
     procText = input("Введите текст на Русском: ")
+    # client.Client().PullDict()
     s.Translate(lang='Ru', text=procText)
     command = input("Продолжить?(д/н): ")
     if command == "д":
