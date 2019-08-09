@@ -2,7 +2,7 @@ import socket
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 a = socket.gethostname()
-serverSocket.bind(("127.0.0.1", 8756))
+serverSocket.bind((socket.gethostname(), 8756))
 serverSocket.listen(1)
 
 while True:
