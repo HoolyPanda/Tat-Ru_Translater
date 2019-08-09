@@ -1,5 +1,6 @@
 # from xlrd import open_workbook
 import translater
+import client
 
 s = translater.Translater()
 
@@ -10,6 +11,11 @@ def MainMenu():
     if command == "д":
         MainMenu()
     elif command == "синх":
+        command = input('загр/скач?: ')
+        if command == "загр":
+            client.Client().PushDict()
+        elif command == "скач":
+            client.Client().PullDict()
         pass
     else:
         exit()
