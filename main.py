@@ -1,7 +1,7 @@
 # from xlrd import open_workbook
-import server1 as server
+import translater
 
-s = server.Server()
+s = translater.Translater()
 
 def MainMenu():
     procText = input("Введите текст на Русском: ")
@@ -9,6 +9,8 @@ def MainMenu():
     command = input("Продолжить?(д/н): ")
     if command == "д":
         MainMenu()
+    elif command == "синх":
+        pass
     else:
         exit()
 

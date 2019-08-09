@@ -4,7 +4,7 @@ import linguoData
 
 
 
-class Server:
+class Translater: 
     def __init__(self):
         self.lang = "Ru"
         pass
