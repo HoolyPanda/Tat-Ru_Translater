@@ -17,7 +17,7 @@ class Translater:
         elif "NUM" in lp:
             return "чис"
         elif "APRO" in lp:
-            return "пм"
+            return "мест"
         elif "PR" in lp:
             return "пред"
         elif "V" in lp:
