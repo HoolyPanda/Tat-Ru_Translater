@@ -3,21 +3,24 @@ import sys
 import translater
 import client
 import os
+import platform
 # from os import path
 
 s = translater.Translater()
 
 def MainMenu():
     # print()
-    # print(os.getlogin())
+    print(platform.system())
     if len(sys.argv) == 2:
         # os.path.exists()
         a = os.getlogin()
+        if platform.system() == 'Linux':
+            print(os.path.abspath(sys.argv[1])) 
+            pass
         if os.path.exists('/home/' + a + '/' +  sys.argv[1]):
-            path = '/home/' + os.getlogin() + '/' + sys.argv[1] 
-            textFile = open(('/home/' + os.getlogin() + '/' +  sys.argv[1]), 'r').read()
-            # print(textFile)
+            textFile = open((os.path.abspath(sys.argv[1]), 'r')).read()
             s.Translate(lang='Ru', text=textFile)
+            textFile.close()
             pass
 
     else:
