@@ -10,19 +10,21 @@ s = translater.Translater()
 def MainMenu():
     # print()
     # print(os.getlogin())
+    a = os.getlogin()
     if len(sys.argv) == 2:
         # os.path.exists()
-        a = os.getlogin()
-        if os.path.exists('/home/' + a + '/' +  sys.argv[1]):
-            path = '/home/' + os.getlogin() + '/' + sys.argv[1] 
-            textFile = open(('/home/' + os.getlogin() + '/' +  sys.argv[1]), 'r').read()
-            # print(textFile)
-            s.Translate(lang='Ru', text=textFile)
+        if os.path.exists(sys.argv[1]):
+            # path = 'C:\\Users\\' + a + '\\' +  sys.argv[1] 
             pass
 
     else:
-        procText = input("Введите текст на Русском: ")
-        s.Translate(lang='Ru', text=procText)
+        procText = input("Введите текст на Русском или путь к файлу: ")
+        if not os.path.exists(procText):
+            s.Translate(lang='Ru', text=procText)
+        else:
+            textFile = open(procText, 'r',encoding='cp1251').read()
+            s.Translate(lang='Ru', text=textFile)
+
     command = input("Продолжить?(д/н): ")
     if command == "д":
         MainMenu()
@@ -35,5 +37,13 @@ def MainMenu():
         pass
     else:
         exit()
-
-MainMenu()
+        pass
+try:
+    MainMenu()
+except Exception as e:
+    print(e)
+    input('')
+    a = open('log', 'w+')
+    a.write("log\n"+ e)
+    a.close()
+# input("---")

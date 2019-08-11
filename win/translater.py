@@ -1,12 +1,13 @@
 from pymystem3 import Mystem as stem
 import openpyxl
 import linguoData
-
+import os
 
 
 class Translater: 
     def __init__(self):
         self.lang = "Ru"
+        self.dictionaryPath = "C:\Personal\ElinorTranslater\\tato-wordlist.xlsx"
         pass
     
     def __convertLangPart(self, lp):
@@ -38,7 +39,7 @@ class Translater:
                 pass
         if word in linguoData.mestPrefx:
             return linguoData.mestPrefx[word]
-        self.book = openpyxl.load_workbook(filename = "./tato-wordlist.xlsx")
+        self.book = openpyxl.load_workbook(filename = self.dictionaryPath)
         self.dict = self.book.get_sheet_by_name(self.book.get_sheet_names()[0])
         rows = self.dict.max_row
         for wordIndex in range(1, rows + 1):
@@ -66,7 +67,7 @@ class Translater:
             self.dict.cell(rows + 1, 1).value = word
             self.dict.cell(rows + 1, 2).value = wType
             self.dict.cell(rows + 1, 3).value = translation
-            self.book.save(filename = "./tato-wordlist.xlsx")
+            self.book.save(filename = self.dictionaryPath)
             self.book.close()
             self.passWord = False 
             return translation

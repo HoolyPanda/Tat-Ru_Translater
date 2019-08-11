@@ -20,10 +20,10 @@ class Client:
         self.clientSocket.send(b"pull")
         hash = self.clientSocket.recv(32).decode('utf-8')
         print("Got hash: ", hash)
-        self.textFileName = "./tato-wordlist.xlsx"
+        self.textFileName = "C:\Personal\ElinorTranslater\\tato-wordlist.xlsx"
         with open(self.textFileName, "w+b") as file:
             bufferData = self.clientSocket.recv(self.buffSize)
-            while bufferData is not b"":
+            while bufferData != b"":
                 print(bufferData)
                 file.write(bufferData)
                 bufferData = self.clientSocket.recv(self.buffSize)
@@ -40,7 +40,7 @@ class Client:
         self.clientSocket.connect((self.serverIp, self.port))
         self.clientSocket.send(b'push')
         time.sleep(1)
-        self.textFileName = "./tato-wordlist.xlsx"
+        self.textFileName = "C:\Personal\ElinorTranslater\\tato-wordlist.xlsx"
         hash  = hashlib.md5(open(self.textFileName, 'rb').read()).hexdigest()
         self.clientSocket.send(hash.encode('utf-8'))
         serverConfirm = b''

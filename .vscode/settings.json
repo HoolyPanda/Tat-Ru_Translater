@@ -2,7 +2,7 @@
     "python.linting.pylintEnabled": true,
     "python.linting.pep8Enabled": false,
     "python.linting.enabled": true,
-    "python.pythonPath": "/bin/python",
+    "python.pythonPath": "C:\\Users\\Pavlo\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": false
 }
