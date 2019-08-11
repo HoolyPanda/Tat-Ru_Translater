@@ -1,9 +1,11 @@
 # Tat-Ru_Translater  
 
 #### INSTALL  
-chmod 777 depInstaller  
-./depInstaller  
+### WIN
+    run setup.exe from folder
   
 #### USAGE  
-from folder run  
-python3 main.py
+### WIN
+    run ElinorTranslater.exe
+    also you can copy abs path to .txt file on Russian
+    
