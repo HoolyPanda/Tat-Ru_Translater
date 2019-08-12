@@ -1,4 +1,6 @@
 import os
+import client
 
-os.mkdir("C:\Personal\ElinorTranslater")
-os.system('copy .\\tato-wordlist.xlsx C:\Personal\ElinorTranslater\\tato-wordlist.xlsx')
+os.mkdir("C:\\Personal\\ElinorTranslater")
+c = client.Client()
+c.PullDict()
