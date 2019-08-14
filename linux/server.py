@@ -14,6 +14,7 @@ def RunServer():
 
         bufferData = conn.recv(4)
         buffSize = 1048576
+
         if bufferData == b"pull":
             textFileName = "tato-wordlist.xlsx"
             md5Summ = hashlib.md5(open(textFileName, "rb").read()).hexdigest()
@@ -67,6 +68,7 @@ def RunServer():
 
         else:
             print(bufferData)
+            conn.close()
 try:
     RunServer()
 except Exception as e:
