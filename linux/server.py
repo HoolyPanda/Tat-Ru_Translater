@@ -6,7 +6,7 @@ import time
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 a = socket.gethostname()
-serverSocket.bind(("79.174.62.233p", 5901))
+serverSocket.bind(("79.174.62.233", 5901))
 serverSocket.listen(1)
 def RunServer():
     while True:
