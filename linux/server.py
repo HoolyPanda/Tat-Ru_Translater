@@ -6,7 +6,7 @@ import time
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 a = socket.gethostname()
-serverSocket.bind(("79.174.62.233", 5901))
+serverSocket.bind(("localhost", 9999))
 serverSocket.listen(1)
 def RunServer():
     while True:
@@ -37,7 +37,7 @@ def RunServer():
                 
         elif bufferData == b"push":
             print("got push rec")
-            passHash = open('./passhash', 'r').readline()
+            # passHash = open('./passhash', 'r').readline()
             # clientHash = conn.recv(64).decode('utf-8')
             # if passHash == clientHash:
                 # conn.send(b'ok')
@@ -51,6 +51,10 @@ def RunServer():
                     file.write(bufferData)
                     bufferData = conn.recv(buffSize)
                     print(bufferData)
+                    if bufferData == b'':
+                        conn.close()
+                        file.close()
+                        break
                 file.close()
                 localHash = hashlib.md5(open(textFileName,'rb').read()).hexdigest()
                 print(hash, '\n', localHash)
@@ -72,6 +76,7 @@ def RunServer():
 try:
     RunServer()
 except Exception as e:
-    logFile = open('/var/log/Translator/server.log', 'w+')
-    logFile.write(e)
+    logFile = open('/home/pavlo/server.log', 'w+')
+    logFile.write(str(e))
+    logFile.close()
     pass

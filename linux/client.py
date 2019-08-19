@@ -7,6 +7,7 @@ class Client:
         try:
             self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.serverIp = "79.174.62.233"
+            # self.serverIp = "localhost"
             self.port = 5901
             self.buffSize = 1048576
             pass
@@ -64,3 +65,4 @@ class Client:
         self.clientSocket.close()
         print("transmission ended. got file {0}", self.textFileName)
 
+# a = Client().PullDict()
