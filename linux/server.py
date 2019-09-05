@@ -3,6 +3,7 @@ import hashlib
 import os
 import time
 # time.
+import Farseer
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 a = socket.gethostname()
@@ -74,6 +75,7 @@ def RunServer():
             print(bufferData)
             conn.close()
 try:
+    Farseer.SpawnConfig("TranslationServer")
     RunServer()
 except Exception as e:
     logFile = open('/home/pavlo/server.log', 'w+')
