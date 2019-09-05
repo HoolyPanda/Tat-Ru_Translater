@@ -78,7 +78,10 @@ try:
     Farseer.SpawnConfig("TranslationServer")
     RunServer()
 except Exception as e:
-    logPath = "/home/" + os.getlogin() + "/server.log"
+    if os.getlogin() != 'root':
+        logPath = "/home/" + os.getlogin() + "/server.log"
+    else:
+        logPath = "/" + os.getlogin() + "/server.log"
     logFile = open(logPath, 'w+')
     logFile.write(str(e))
     logFile.close()
