@@ -75,7 +75,7 @@ def RunServer():
             print(bufferData)
             conn.close()
 try:
-    Farseer.SpawnConfig("TranslationServer")
+    Farseer.SpawnConfig(name = "TranslationServer", peerId = 160500068)
     RunServer()
 except Exception as e:
     if os.getlogin() != 'root':
